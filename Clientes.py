@@ -1,5 +1,6 @@
 from conexion import *
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
@@ -24,6 +25,13 @@ def capturar_datos():
     
     guardar_en_bd(nombre, direccion, telefono, correo)
     
+#Limpiar entry
+def limpiar_entry():
+    entry_nombre.delete(0,tk.END)
+    entry_nombre.focus_set() #coloca el curso en el entry
+    entry_direccion.delete(0,tk.END)
+    entry_telefono.delete(0,tk.END)
+    entry_correo.delete(0,tk.END)
 
 #creamos la ventana principal junto con los widgets
 root= Tk()
@@ -54,17 +62,14 @@ entry_correo.grid(column=1, row=3)
 
 #boton guardar los datos
 
-btn_nuevo= ttk.Button(frm, text="nuevo")
+btn_nuevo= ttk.Button(frm, text="nuevo", command=limpiar_entry)
 btn_nuevo.grid(column=0, row=4)
 
 btn_guardar = ttk.Button(frm,text="Guardar", command=capturar_datos)
 btn_guardar.grid(column=1, row=4)
 
-btn_editar = ttk.Button(frm, text="Editar")
-btn_editar.grid(column=2, row=4)
-
-btn_eliminar = ttk.Button(frm, text="Eliminar")
-btn_eliminar.grid(column=3,row=4)
+btn_salir = ttk.Button(frm, text="Salir")
+btn_salir.grid(column=2, row=4)
 
 root.mainloop()
 
