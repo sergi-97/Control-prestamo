@@ -1,9 +1,9 @@
 from conexion import *
 
 
-coneccion = coneccion.cursor()
+miCursor = coneccion.cursor()
 
-"""
+
 miCursor.execute('''CREATE TABLE Clientes(
     ID_cliente INTEGER PRIMARY KEY AUTOINCREMENT, 
     Nombre TEXT, 
@@ -11,8 +11,6 @@ miCursor.execute('''CREATE TABLE Clientes(
     Telefono TEXT, 
     Correo TEXT)
     ''')
-
-
 
 clientes = [
     
@@ -62,9 +60,8 @@ prestamo = [(2000, 10, 3, '19/9/2024', '19/12/2024', 1, 2),
 
 miCursor.executemany("INSERT INTO Prestamos VALUES (NULL, ?,  ?, ?, ?, ?, ?, ?)", prestamo)
 
-"""
 
-"""
+
 miCursor.execute('''
                  CREATE TABLE Pagos(
                      ID_pago INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -76,7 +73,7 @@ miCursor.execute('''
                      )
                  
                  ''')
-"""
+
 
 pago = [
     (240, '19/10/2024',1 ),
@@ -88,3 +85,4 @@ coneccion.executemany("INSERT INTO Pagos VALUES (NULL, ?, ?, ?)", pago)
 
 coneccion.commit()
 
+coneccion.close()
