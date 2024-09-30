@@ -54,9 +54,6 @@ class Aplicacion(tk.Frame):
         btn_salir = ttk.Button(self.frm_botones, text="Salir", command=self.cerrar_conexion)
         btn_salir.grid(column=0, row=2, pady=5)
 
-        btn_buscar = ttk.Button(self.frm_botones, text="Buscar", command=self.listar_clientes)
-        btn_buscar.grid(column=0, row=3)
-    
         # Primer Frame para datos (Treeview)
         self.frm_treeview = ttk.Frame(self, padding=10)
         self.frm_treeview.grid(column=0, row=1, padx=10, pady=10,columnspan=2, sticky=N)
@@ -104,6 +101,7 @@ class Aplicacion(tk.Frame):
         self.correo = self.entry_correo.get()
 
         self.guardar_en_bd(self.nombre, self.direccion, self.telefono, self.correo)
+        self.listar_clientes()
 
     # Limpiar los campos de entrada (entry)
     def limpiar_entry(self):
@@ -126,6 +124,7 @@ root.title("Formulario Clientes")
 root.geometry("1050x500")
 
 miApp = Aplicacion(master=root)
+miApp.listar_clientes()
 miApp.mainloop()
 
 

@@ -33,11 +33,8 @@ class appEmleado(tk.Frame):
         self.btn_nuevo = Button(self.frm_botones,text="Nuevo")
         self.btn_nuevo.grid(column=0, row=0)
 
-        self.btn_guardar = Button(self.frm_botones, text="Guardar")
+        self.btn_guardar = Button(self.frm_botones, text="Guardar", command=self.obtener_datos_empleado)
         self.btn_guardar.grid(column=0, row=1)
-
-        self.btn_mostrar = Button(self.frm_botones, text="Mostrar",command=self.listar_empleados)
-        self.btn_mostrar.grid(column=0, row=2)
 
         #CREAMOS EL FRAME DEL treeVIEW
         self.frm_treeview = tk.Frame(self, padx=10,pady=10)
@@ -46,13 +43,29 @@ class appEmleado(tk.Frame):
         #Crear el TreeView para mostrar los clientes
         self.lista_empleados = ["ID_Empleados", "Nombre", "Cargo"]
         self.tree = ttk.Treeview(self.frm_treeview, columns= self.lista_empleados, show="headings" )
+      
 
         #configurar las columnas
         for col in self.lista_empleados:
             self.tree.heading(col, text=col)
         
         self.tree.grid(column=0, row=0)
+    
+    def guardar_empleados(self, nombre, cargo):
+        self.cursor = coneccion.cursor()
+        self.empleado = [(nombre, cargo)]
+        self.cursor.executemany("INSERT INTO Empleados VALUES (NULL,?, ?)", self.empleado)
+        coneccion.commit()
+        messagebox.showinfo("Información", "Datos Guardados correctamente")
 
+    def obtener_datos_empleado(self):
+        self.nombre = self.entry_nombre.get()
+        self.cargo = self.entry_cargo.get()
+
+        self.guardar_empleados(self.nombre, self.cargo)
+        self.listar_empleados()
+
+        
     def listar_empleados(self):
         #Obtener los datos de la tabla cliente
         cursor = coneccion.cursor()
@@ -67,12 +80,14 @@ class appEmleado(tk.Frame):
         for empleado in empleados:
             self.tree.insert("", "end", values=empleado)
 
-    
 root = tk.Tk()
 root.title("Formulario Empleado")
 root.geometry("1050x500")
 
 MiAppEmp = appEmleado(master=root)
+
+MiAppEmp.listar_empleados()
+
 
 MiAppEmp.mainloop()
 
